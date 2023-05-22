@@ -4,6 +4,11 @@ class TuitsController < ApplicationController
   # GET /tuits or /tuits.json
   def index
     @tuits = Tuit.paginate(page: params[:page], per_page: 10)
+    if params[:search]
+      @tuits = Tuit.where("description LIKE ?", "%#{params[:search]}%").paginate(page: params[:page], per_page: 10)
+    else
+      @tuits = Tuit.paginate(page: params[:page], per_page: 10)
+    end
   end
 
   # GET /tuits/1 or /tuits/1.json

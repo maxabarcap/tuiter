@@ -1,14 +1,20 @@
 <p style="color: green"><%= notice %></p>
 
 <h1>Tuits</h1>
-
-<div id="tuits">
+<%= form_tag(tuits_path, method: "get") do %>
+  <%= text_field_tag(:search, params[:search]) %>
+  <%= submit_tag("Search") %>
+<% end %>
+<table id="tuits">
   <% @tuits.each do |tuit| %>
-    <%= render tuit %>
-    <p>
-      <%= link_to "Show this tuit", tuit %>
-    </p>
+    <tr>
+      <td><%= tuit.description %></td>
+      <td><%= tuit.username %></td>
+      <td><%= link_to 'Show', tuit %></td>
+      <td><%= link_to 'Edit', edit_tuit_path(tuit) %></td>
+      <td><%= link_to 'Destroy', tuit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
   <% end %>
-</div>
-
+</table>
+<%= will_paginate @tuits, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
 <%= link_to "New tuit", new_tuit_path %>
