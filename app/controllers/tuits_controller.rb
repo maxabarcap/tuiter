@@ -3,7 +3,7 @@ class TuitsController < ApplicationController
 
   # GET /tuits or /tuits.json
   def index
-    @tuits = Tuit.all
+    @tuits = Tuit.paginate(page: params[:page], per_page: 10)
   end
 
   # GET /tuits/1 or /tuits/1.json
